@@ -127,16 +127,22 @@ class ViewController: UIViewController {
         
         // Configure the dataset for the line chart
         let dataSet = LineChartDataSet(entries: entries, label: "Sample Data")
-        dataSet.colors = [NSUIColor.blue] // Line color
-        dataSet.circleColors = [NSUIColor.red] // Circle color
-        dataSet.mode = .cubicBezier // Smooth lines like a wave
-        dataSet.lineWidth = 2.0 // Line width
-        dataSet.circleRadius = 4.0 // Circle radius (if circles are used)
-        dataSet.drawValuesEnabled = false // Hide values
+        dataSet.colors = [NSUIColor.blue] // line color
+        dataSet.circleColors = [NSUIColor.red] // circle color
+        dataSet.mode = .cubicBezier // smooth lines like a wave
+        dataSet.lineWidth = 2.0 // line width
+        dataSet.circleRadius = 4.0 // circle radius
+        dataSet.drawValuesEnabled = false // hide values
         
         // Set the data for the LineChartView
         let data = LineChartData(dataSet: dataSet)
         lineChartView.data = data
+        
+        // Set axes and legend text color
+        lineChartView.xAxis.labelTextColor = .black
+        lineChartView.leftAxis.labelTextColor = .black
+        lineChartView.rightAxis.labelTextColor = .black
+        lineChartView.legend.textColor = .black
         
         // Handle dragging
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
