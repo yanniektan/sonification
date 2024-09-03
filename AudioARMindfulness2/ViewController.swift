@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     var oscillator: AVAudioSourceNode?
     var currentFrequency: Double = 440.0 // default frequency 440 Hz
     var isDragging = false // track if the user is dragging
+    var coordinateLabel: PaddedLabel! // for showing data label
     
     func setupAudioSession() {
         let audioSession = AVAudioSession.sharedInstance()
@@ -82,6 +83,18 @@ class ViewController: UIViewController {
         lineChartView.autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
         view.backgroundColor = .white
         view.addSubview(lineChartView)
+        
+        // Initialize the PaddedLabel
+        coordinateLabel = PaddedLabel()
+        coordinateLabel.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        coordinateLabel.textColor = .white
+        coordinateLabel.font = UIFont.systemFont(ofSize: 16)
+        coordinateLabel.textAlignment = .left
+        coordinateLabel.numberOfLines = 2
+        coordinateLabel.textInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        coordinateLabel.layer.cornerRadius = 8
+        coordinateLabel.layer.masksToBounds = true
+        view.addSubview(coordinateLabel)
         
         // Hardcoded sample data entries
         let entries = [
@@ -151,12 +164,21 @@ class ViewController: UIViewController {
                    let entry = dataSet.entryForXValue(xValue, closestToY: Double.nan) {
                     // Convert the data point's y-value to a pitch and play the tone
                     sonifyDataPoint(entry.y)
+                    
+                    // Update label text
+                    coordinateLabel.text = String(format: "X: %.2f\nY: %.2f", entry.x, entry.y)
+                    
+                    // Calculate label size to fit text
+                    let labelSize = coordinateLabel.intrinsicContentSize
+                    coordinateLabel.frame = CGRect(x: 30, y: 120, width: labelSize.width, height: labelSize.height)
+                    coordinateLabel.isHidden = false
                 }
             
             // Stop dragging
             case .ended, .cancelled:
                 isDragging = false
                 stopAudio()
+                coordinateLabel.isHidden = true
             
             default:
                 break
