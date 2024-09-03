@@ -17,6 +17,10 @@ class ViewController: UIViewController {
     var isDragging = false // track if the user is dragging
     var coordinateLabel: PaddedLabel! // for showing data label
     
+    // For split-tapping gesture
+    var prevNumberOfTouches: Int = 0
+    var prevCoordinate: ChartDataEntry!
+    
     func setupAudioSession() {
         let audioSession = AVAudioSession.sharedInstance()
         do {
@@ -162,6 +166,11 @@ class ViewController: UIViewController {
             
             // While dragging
             case .changed:
+                // Detect split-tap
+                if prevNumberOfTouches == 1 && recognizer.numberOfTouches == 2 {
+                    handleSplitTap()
+                }
+            
                 // Get the x-value corresponding to the touch location
                 let xValue = lineChartView.valueForTouchPoint(point: location, axis: .left).x
             
@@ -178,6 +187,10 @@ class ViewController: UIViewController {
                     let labelSize = coordinateLabel.intrinsicContentSize
                     coordinateLabel.frame = CGRect(x: 30, y: 120, width: labelSize.width, height: labelSize.height)
                     coordinateLabel.isHidden = false
+                    
+                    // Set the coordinate for split-tap detection
+                    prevNumberOfTouches = recognizer.numberOfTouches
+                    prevCoordinate = entry
                 }
             
             // Stop dragging
@@ -189,6 +202,11 @@ class ViewController: UIViewController {
             default:
                 break
         }
+    }
+    
+    @objc func handleSplitTap() {
+        print("split-tap detected at", prevCoordinate.x, prevCoordinate.y)
+        // TODO: perform the split-tap action, e.g. speech synthesis
     }
     
     func sonifyDataPoint(_ value: Double) {
