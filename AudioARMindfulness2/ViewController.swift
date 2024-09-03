@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     var lineChartView: LineChartView!
     var isDragging = false // track if the user is dragging
     var coordinateLabel: PaddedLabel! // for showing data label
+    var splitTapAlertLabel: PaddedLabel! // for showing split-tap detections
     
     // For split-tapping gesture
     var prevNumberOfTouches: Int = 0
@@ -25,6 +26,7 @@ class ViewController: UIViewController {
         audioManager.setupAudioSession()
         audioManager.setupAudioEngine()
         setupLineChart()
+        setupSplitTap()
     }
     
     func setupLineChart() {
@@ -46,6 +48,20 @@ class ViewController: UIViewController {
         // Handle dragging
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         lineChartView.addGestureRecognizer(panGestureRecognizer)
+    }
+    
+    func setupSplitTap() {
+        // Initialize the PaddedLabel
+        splitTapAlertLabel = PaddedLabel()
+        splitTapAlertLabel.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        splitTapAlertLabel.textColor = .white
+        splitTapAlertLabel.font = UIFont.systemFont(ofSize: 16)
+        splitTapAlertLabel.textAlignment = .left
+        splitTapAlertLabel.numberOfLines = 2
+        splitTapAlertLabel.textInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        splitTapAlertLabel.layer.cornerRadius = 8
+        splitTapAlertLabel.layer.masksToBounds = true
+        view.addSubview(splitTapAlertLabel)
     }
     
     @objc func handlePan(_ recognizer: UIPanGestureRecognizer) {
@@ -91,6 +107,7 @@ class ViewController: UIViewController {
                 isDragging = false
                 audioManager.stopAudio()
                 coordinateLabel.isHidden = true
+                splitTapAlertLabel.isHidden = true
             
             default:
                 break
@@ -99,6 +116,11 @@ class ViewController: UIViewController {
     
     @objc func handleSplitTap() {
         print("split-tap detected at", prevCoordinate.x, prevCoordinate.y)
-        // TODO: perform the split-tap action, e.g. speech synthesis
+        
+        // TODO: Remove this and perform the intended split-tap action, e.g. speech synthesis
+        splitTapAlertLabel.text = "split-tap detected: \(prevCoordinate.x), \(prevCoordinate.y)"
+        let labelSize = splitTapAlertLabel.intrinsicContentSize
+        splitTapAlertLabel.frame = CGRect(x: 30, y: 180, width: labelSize.width, height: labelSize.height)
+        splitTapAlertLabel.isHidden = false
     }
 }
