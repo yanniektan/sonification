@@ -7,23 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		47DEE5522C86F7AF00C371D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47DEE5512C86F7AF00C371D6 /* Main.storyboard */; };
+		47DEE5562C870CA000C371D6 /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DEE5552C870CA000C371D6 /* PaddedLabel.swift */; };
+		47DEE5582C87235200C371D6 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DEE5572C87235200C371D6 /* AudioManager.swift */; };
+		47DEE55A2C87241700C371D6 /* ChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DEE5592C87241700C371D6 /* ChartManager.swift */; };
 		498A88482C0EF2E000C0B582 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498A88472C0EF2E000C0B582 /* AppDelegate.swift */; };
 		498A884A2C0EF2E000C0B582 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498A88492C0EF2E000C0B582 /* SceneDelegate.swift */; };
 		498A884C2C0EF2E000C0B582 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498A884B2C0EF2E000C0B582 /* ViewController.swift */; };
-		498A884F2C0EF2E000C0B582 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 498A884D2C0EF2E000C0B582 /* Main.storyboard */; };
 		498A88512C0EF2E100C0B582 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 498A88502C0EF2E100C0B582 /* Assets.xcassets */; };
 		498A88542C0EF2E100C0B582 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 498A88522C0EF2E100C0B582 /* LaunchScreen.storyboard */; };
+		5F025E21778D030AB0E16E02 /* Pods_AudioARMindfulness2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96FE0C2DF440F80CC1E76012 /* Pods_AudioARMindfulness2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		47DEE5512C86F7AF00C371D6 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		47DEE5552C870CA000C371D6 /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = "<group>"; };
+		47DEE5572C87235200C371D6 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		47DEE5592C87241700C371D6 /* ChartManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartManager.swift; sourceTree = "<group>"; };
 		498A88442C0EF2E000C0B582 /* AudioARMindfulness2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioARMindfulness2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		498A88472C0EF2E000C0B582 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		498A88492C0EF2E000C0B582 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		498A884B2C0EF2E000C0B582 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		498A884E2C0EF2E000C0B582 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		498A88502C0EF2E100C0B582 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		498A88532C0EF2E100C0B582 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		498A88552C0EF2E100C0B582 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5A88E880DDB6DA3AC1F04351 /* Pods-AudioARMindfulness2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioARMindfulness2.debug.xcconfig"; path = "Target Support Files/Pods-AudioARMindfulness2/Pods-AudioARMindfulness2.debug.xcconfig"; sourceTree = "<group>"; };
+		96FE0C2DF440F80CC1E76012 /* Pods_AudioARMindfulness2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AudioARMindfulness2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5C796D353950218020DB8EC /* Pods-AudioARMindfulness2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioARMindfulness2.release.xcconfig"; path = "Target Support Files/Pods-AudioARMindfulness2/Pods-AudioARMindfulness2.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +41,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F025E21778D030AB0E16E02 /* Pods_AudioARMindfulness2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D208268BE39C448BD1A4B5A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5A88E880DDB6DA3AC1F04351 /* Pods-AudioARMindfulness2.debug.xcconfig */,
+				D5C796D353950218020DB8EC /* Pods-AudioARMindfulness2.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		498A883B2C0EF2E000C0B582 = {
 			isa = PBXGroup;
 			children = (
 				498A88462C0EF2E000C0B582 /* AudioARMindfulness2 */,
 				498A88452C0EF2E000C0B582 /* Products */,
+				3D208268BE39C448BD1A4B5A /* Pods */,
+				5B960C6E8BB09C15787C57BF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -59,12 +81,23 @@
 				498A88472C0EF2E000C0B582 /* AppDelegate.swift */,
 				498A88492C0EF2E000C0B582 /* SceneDelegate.swift */,
 				498A884B2C0EF2E000C0B582 /* ViewController.swift */,
-				498A884D2C0EF2E000C0B582 /* Main.storyboard */,
+				47DEE5572C87235200C371D6 /* AudioManager.swift */,
+				47DEE5592C87241700C371D6 /* ChartManager.swift */,
+				47DEE5552C870CA000C371D6 /* PaddedLabel.swift */,
 				498A88502C0EF2E100C0B582 /* Assets.xcassets */,
 				498A88522C0EF2E100C0B582 /* LaunchScreen.storyboard */,
+				47DEE5512C86F7AF00C371D6 /* Main.storyboard */,
 				498A88552C0EF2E100C0B582 /* Info.plist */,
 			);
 			path = AudioARMindfulness2;
+			sourceTree = "<group>";
+		};
+		5B960C6E8BB09C15787C57BF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				96FE0C2DF440F80CC1E76012 /* Pods_AudioARMindfulness2.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +107,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 498A88582C0EF2E100C0B582 /* Build configuration list for PBXNativeTarget "AudioARMindfulness2" */;
 			buildPhases = (
+				35E9EBC6552D1817E1383497 /* [CP] Check Pods Manifest.lock */,
 				498A88402C0EF2E000C0B582 /* Sources */,
 				498A88412C0EF2E000C0B582 /* Frameworks */,
 				498A88422C0EF2E000C0B582 /* Resources */,
+				8D85C91244DE4F320458E4AA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -125,13 +160,55 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47DEE5522C86F7AF00C371D6 /* Main.storyboard in Resources */,
 				498A88542C0EF2E100C0B582 /* LaunchScreen.storyboard in Resources */,
 				498A88512C0EF2E100C0B582 /* Assets.xcassets in Resources */,
-				498A884F2C0EF2E000C0B582 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		35E9EBC6552D1817E1383497 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AudioARMindfulness2-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8D85C91244DE4F320458E4AA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AudioARMindfulness2/Pods-AudioARMindfulness2-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AudioARMindfulness2/Pods-AudioARMindfulness2-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AudioARMindfulness2/Pods-AudioARMindfulness2-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		498A88402C0EF2E000C0B582 /* Sources */ = {
@@ -140,6 +217,9 @@
 			files = (
 				498A884C2C0EF2E000C0B582 /* ViewController.swift in Sources */,
 				498A88482C0EF2E000C0B582 /* AppDelegate.swift in Sources */,
+				47DEE55A2C87241700C371D6 /* ChartManager.swift in Sources */,
+				47DEE5562C870CA000C371D6 /* PaddedLabel.swift in Sources */,
+				47DEE5582C87235200C371D6 /* AudioManager.swift in Sources */,
 				498A884A2C0EF2E000C0B582 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,14 +227,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		498A884D2C0EF2E000C0B582 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				498A884E2C0EF2E000C0B582 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		498A88522C0EF2E100C0B582 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -282,12 +354,13 @@
 		};
 		498A88592C0EF2E100C0B582 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A88E880DDB6DA3AC1F04351 /* Pods-AudioARMindfulness2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M7RLD6GX24;
+				DEVELOPMENT_TEAM = 9GMK47DYV4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AudioARMindfulness2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -310,12 +383,13 @@
 		};
 		498A885A2C0EF2E100C0B582 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D5C796D353950218020DB8EC /* Pods-AudioARMindfulness2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = M7RLD6GX24;
+				DEVELOPMENT_TEAM = 9GMK47DYV4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AudioARMindfulness2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
