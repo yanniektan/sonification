@@ -3,20 +3,26 @@ PODS:
     - Charts/Core (= 4.1.0)
   - Charts/Core (4.1.0):
     - SwiftAlgorithms (~> 1.0)
+  - DGCharts (5.1.0):
+    - DGCharts/Core (= 5.1.0)
+  - DGCharts/Core (5.1.0)
   - SwiftAlgorithms (1.0.0)
 
 DEPENDENCIES:
   - Charts
+  - DGCharts
 
 SPEC REPOS:
   trunk:
     - Charts
+    - DGCharts
     - SwiftAlgorithms
 
 SPEC CHECKSUMS:
   Charts: ce0768268078eee0336f122c3c4ca248e4e204c5
+  DGCharts: 1c6daf585b6cfc78807af44ea690d357c410627f
   SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
 
-PODFILE CHECKSUM: a27e82a0355bfb25f311a9670abe122f277fd8ac
+PODFILE CHECKSUM: 93dc826c2fae4aca3349242f329b9550f2edccc8
 
 COCOAPODS: 1.15.2

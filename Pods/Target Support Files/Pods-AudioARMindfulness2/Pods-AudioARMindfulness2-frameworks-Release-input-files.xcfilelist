@@ -1,3 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-AudioARMindfulness2/Pods-AudioARMindfulness2-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/Charts/Charts.framework
+${BUILT_PRODUCTS_DIR}/DGCharts/DGCharts.framework
 ${BUILT_PRODUCTS_DIR}/SwiftAlgorithms/Algorithms.framework

@@ -65,7 +65,16 @@ class ViewController: UIViewController {
     }
     
     @objc func handlePan(_ recognizer: UIPanGestureRecognizer) {
-        let location = recognizer.location(in: lineChartView)
+        //let location = recognizer.location(in: lineChartView)
+        guard recognizer.numberOfTouches > 0 else {
+            isDragging = false
+            audioManager.stopAudio()
+            coordinateLabel.isHidden = true
+            splitTapAlertLabel.isHidden = true
+            return
+        }
+        
+        let firstTouchLocation = recognizer.location(ofTouch: 0, in: lineChartView)
         
         switch recognizer.state {
             // Begin dragging
@@ -81,7 +90,8 @@ class ViewController: UIViewController {
                 }
             
                 // Get the x-value corresponding to the touch location
-                let xValue = lineChartView.valueForTouchPoint(point: location, axis: .left).x
+                let xValue = lineChartView.valueForTouchPoint(point: firstTouchLocation, axis: .left).x
+            
             
                 // Get the data point closest to the x-value
                 if let dataSet = lineChartView.data?.dataSets.first,
@@ -108,6 +118,7 @@ class ViewController: UIViewController {
                 audioManager.stopAudio()
                 coordinateLabel.isHidden = true
                 splitTapAlertLabel.isHidden = true
+
             
             default:
                 break

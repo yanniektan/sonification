@@ -61,6 +61,8 @@ class ChartManager {
         let data = LineChartData(dataSet: dataSet)
         lineChartView.data = data
         
+        lineChartView.setScaleEnabled(false)
+        
         // Set axes and legend text color
         lineChartView.xAxis.labelTextColor = .black
         lineChartView.leftAxis.labelTextColor = .black

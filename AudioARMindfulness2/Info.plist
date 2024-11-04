@@ -19,7 +19,5 @@
 			</array>
 		</dict>
 	</dict>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>We need access to the microphone to capture and play audio in real time.</string>
 </dict>
 </plist>
