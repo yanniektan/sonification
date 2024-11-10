@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		291270392CE04ABB00C464E9 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 291270382CE04ABB00C464E9 /* AudioKit */; };
 		47DEE5522C86F7AF00C371D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47DEE5512C86F7AF00C371D6 /* Main.storyboard */; };
 		47DEE5562C870CA000C371D6 /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DEE5552C870CA000C371D6 /* PaddedLabel.swift */; };
 		47DEE5582C87235200C371D6 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DEE5572C87235200C371D6 /* AudioManager.swift */; };
@@ -16,7 +17,7 @@
 		498A884C2C0EF2E000C0B582 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498A884B2C0EF2E000C0B582 /* ViewController.swift */; };
 		498A88512C0EF2E100C0B582 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 498A88502C0EF2E100C0B582 /* Assets.xcassets */; };
 		498A88542C0EF2E100C0B582 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 498A88522C0EF2E100C0B582 /* LaunchScreen.storyboard */; };
-		5F025E21778D030AB0E16E02 /* Pods_AudioARMindfulness2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96FE0C2DF440F80CC1E76012 /* Pods_AudioARMindfulness2.framework */; };
+		C7A059DAE2C857CB6734D53A /* Pods_AudioARMindfulness2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D983252459D73C664134D8CE /* Pods_AudioARMindfulness2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,9 +32,9 @@
 		498A88502C0EF2E100C0B582 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		498A88532C0EF2E100C0B582 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		498A88552C0EF2E100C0B582 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5A88E880DDB6DA3AC1F04351 /* Pods-AudioARMindfulness2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioARMindfulness2.debug.xcconfig"; path = "Target Support Files/Pods-AudioARMindfulness2/Pods-AudioARMindfulness2.debug.xcconfig"; sourceTree = "<group>"; };
-		96FE0C2DF440F80CC1E76012 /* Pods_AudioARMindfulness2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AudioARMindfulness2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D5C796D353950218020DB8EC /* Pods-AudioARMindfulness2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioARMindfulness2.release.xcconfig"; path = "Target Support Files/Pods-AudioARMindfulness2/Pods-AudioARMindfulness2.release.xcconfig"; sourceTree = "<group>"; };
+		7093057EA5ED1C056E162DD3 /* Pods-AudioARMindfulness2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioARMindfulness2.debug.xcconfig"; path = "Target Support Files/Pods-AudioARMindfulness2/Pods-AudioARMindfulness2.debug.xcconfig"; sourceTree = "<group>"; };
+		7767FA0E198557900A881353 /* Pods-AudioARMindfulness2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioARMindfulness2.release.xcconfig"; path = "Target Support Files/Pods-AudioARMindfulness2/Pods-AudioARMindfulness2.release.xcconfig"; sourceTree = "<group>"; };
+		D983252459D73C664134D8CE /* Pods_AudioARMindfulness2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AudioARMindfulness2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +42,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F025E21778D030AB0E16E02 /* Pods_AudioARMindfulness2.framework in Frameworks */,
+				291270392CE04ABB00C464E9 /* AudioKit in Frameworks */,
+				C7A059DAE2C857CB6734D53A /* Pods_AudioARMindfulness2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,8 +53,8 @@
 		3D208268BE39C448BD1A4B5A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				5A88E880DDB6DA3AC1F04351 /* Pods-AudioARMindfulness2.debug.xcconfig */,
-				D5C796D353950218020DB8EC /* Pods-AudioARMindfulness2.release.xcconfig */,
+				7093057EA5ED1C056E162DD3 /* Pods-AudioARMindfulness2.debug.xcconfig */,
+				7767FA0E198557900A881353 /* Pods-AudioARMindfulness2.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -63,7 +65,7 @@
 				498A88462C0EF2E000C0B582 /* AudioARMindfulness2 */,
 				498A88452C0EF2E000C0B582 /* Products */,
 				3D208268BE39C448BD1A4B5A /* Pods */,
-				5B960C6E8BB09C15787C57BF /* Frameworks */,
+				AEF953145E0E31C4A9E210E1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -92,10 +94,10 @@
 			path = AudioARMindfulness2;
 			sourceTree = "<group>";
 		};
-		5B960C6E8BB09C15787C57BF /* Frameworks */ = {
+		AEF953145E0E31C4A9E210E1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				96FE0C2DF440F80CC1E76012 /* Pods_AudioARMindfulness2.framework */,
+				D983252459D73C664134D8CE /* Pods_AudioARMindfulness2.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -107,17 +109,20 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 498A88582C0EF2E100C0B582 /* Build configuration list for PBXNativeTarget "AudioARMindfulness2" */;
 			buildPhases = (
-				35E9EBC6552D1817E1383497 /* [CP] Check Pods Manifest.lock */,
+				3CAC984EA70963F9178595FC /* [CP] Check Pods Manifest.lock */,
 				498A88402C0EF2E000C0B582 /* Sources */,
 				498A88412C0EF2E000C0B582 /* Frameworks */,
 				498A88422C0EF2E000C0B582 /* Resources */,
-				8D85C91244DE4F320458E4AA /* [CP] Embed Pods Frameworks */,
+				B7AAF7636519BEEDC6700E3C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = AudioARMindfulness2;
+			packageProductDependencies = (
+				291270382CE04ABB00C464E9 /* AudioKit */,
+			);
 			productName = AudioARMindfulness2;
 			productReference = 498A88442C0EF2E000C0B582 /* AudioARMindfulness2.app */;
 			productType = "com.apple.product-type.application";
@@ -146,6 +151,9 @@
 				Base,
 			);
 			mainGroup = 498A883B2C0EF2E000C0B582;
+			packageReferences = (
+				291270372CE04ABB00C464E9 /* XCRemoteSwiftPackageReference "AudioKit" */,
+			);
 			productRefGroup = 498A88452C0EF2E000C0B582 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -169,7 +177,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		35E9EBC6552D1817E1383497 /* [CP] Check Pods Manifest.lock */ = {
+		3CAC984EA70963F9178595FC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -191,7 +199,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8D85C91244DE4F320458E4AA /* [CP] Embed Pods Frameworks */ = {
+		B7AAF7636519BEEDC6700E3C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -354,7 +362,7 @@
 		};
 		498A88592C0EF2E100C0B582 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5A88E880DDB6DA3AC1F04351 /* Pods-AudioARMindfulness2.debug.xcconfig */;
+			baseConfigurationReference = 7093057EA5ED1C056E162DD3 /* Pods-AudioARMindfulness2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -384,7 +392,7 @@
 		};
 		498A885A2C0EF2E100C0B582 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D5C796D353950218020DB8EC /* Pods-AudioARMindfulness2.release.xcconfig */;
+			baseConfigurationReference = 7767FA0E198557900A881353 /* Pods-AudioARMindfulness2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -434,6 +442,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		291270372CE04ABB00C464E9 /* XCRemoteSwiftPackageReference "AudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/AudioKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		291270382CE04ABB00C464E9 /* AudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 291270372CE04ABB00C464E9 /* XCRemoteSwiftPackageReference "AudioKit" */;
+			productName = AudioKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 498A883C2C0EF2E000C0B582 /* Project object */;
 }

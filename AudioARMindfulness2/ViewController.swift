@@ -23,8 +23,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         audioManager = AudioManager()
-        audioManager.setupAudioSession()
-        audioManager.setupAudioEngine()
+        //audioManager.setupAudioSession()
+        //audioManager.setupAudioEngine()
         setupLineChart()
         setupSplitTap()
     }
