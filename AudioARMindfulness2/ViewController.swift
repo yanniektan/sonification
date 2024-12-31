@@ -9,7 +9,15 @@ import UIKit
 import AVFoundation
 import Charts
 
+
+
+
 class ViewController: UIViewController {
+    //Rifat: This array will store two points selected
+    var selectedPoints: [ChartDataEntry] = []
+
+    
+    
     var audioManager: AudioManager!
     var lineChartView: LineChartView!
     var isDragging = false // track if the user is dragging
@@ -20,6 +28,72 @@ class ViewController: UIViewController {
     var prevNumberOfTouches: Int = 0
     var prevCoordinate: ChartDataEntry!
 
+    //Rifat: Function will set up double tap gesture.
+    func setupDoubleTapGesture() {
+        // Create a double-tap gesture recognizer
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
+        //Needs two taps for the gesture
+        doubleTapGesture.numberOfTapsRequired = 2
+        //This puts the gesture to the chart review
+        lineChartView.addGestureRecognizer(doubleTapGesture) // Attach the gesture to the chart view
+    }
+    
+    //Rifat Handledouble tap gesture
+    @objc func handleDoubleTap(_ sender: UITapGestureRecognizer) {
+        // Get the location of the double-tap on the line chart
+        let location = sender.location(in: lineChartView)
+
+        // Get the x-value of the tap location
+        let xValue = lineChartView.valueForTouchPoint(point: location, axis: .left).x
+        if let dataSet = lineChartView.data?.dataSets.first,
+           let entry = dataSet.entryForXValue(xValue, closestToY: Double.nan) {
+            
+            // Add the selected point to the array
+            selectedPoints.append(entry)
+            print("Double-tapped point: X: \(entry.x), Y: \(entry.y)")
+
+            // If two points have been selected, calculate the difference
+            if selectedPoints.count == 2 {
+                calculateAndSonifyDifference()
+            }
+        }
+    }
+
+    
+    //Rifat
+    func calculateAndSonifyDifference() {
+        // Ensure there are two points to calculate the difference
+        guard selectedPoints.count == 2 else { return }
+
+        let point1 = selectedPoints[0]
+        let point2 = selectedPoints[1]
+
+        // Calculate the absolute difference in the y-values
+        let difference = abs(point2.y - point1.y)
+        print("Difference between points: \(difference)")
+
+        // Clear the selected points for the next interaction
+        selectedPoints.removeAll()
+
+        // Pass the difference to the audio manager for sonification
+        sonifyDifference(difference)
+    }
+    
+    func sonifyDifference(_ difference: Double) {
+        // Map the difference to a frequency range (e.g., 220 Hz to 880 Hz)
+        let frequency = 220.0 + (difference * 10) // Adjust scaling as needed
+        audioManager.oscillator.frequency = Float(frequency) // Set the oscillator frequency
+        audioManager.startAudio()
+
+        // Stop the sound after 1 second
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.audioManager.stopAudio()
+        }
+    }
+
+    
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         audioManager = AudioManager()
@@ -27,6 +101,9 @@ class ViewController: UIViewController {
         //audioManager.setupAudioEngine()
         setupLineChart()
         setupSplitTap()
+        
+        //Rifat: function for double-tap
+        setupDoubleTapGesture()
     }
     
     func setupLineChart() {

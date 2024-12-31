@@ -7,7 +7,7 @@ target 'AudioARMindfulness2' do
 
   # Pods for AudioARMindfulness2
   pod 'Charts'
-  pod 'DGCharts' 
+  #pod 'DGCharts' 
   # pod 'AudioKit'
 
 end
