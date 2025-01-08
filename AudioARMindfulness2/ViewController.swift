@@ -38,25 +38,48 @@ class ViewController: UIViewController {
         lineChartView.addGestureRecognizer(doubleTapGesture) // Attach the gesture to the chart view
     }
     
-    //Rifat Handledouble tap gesture
-    @objc func handleDoubleTap(_ sender: UITapGestureRecognizer) {
-        // Get the location of the double-tap on the line chart
+    
+    @objc func handleSingleTap(_ sender: UITapGestureRecognizer) {
         let location = sender.location(in: lineChartView)
-
-        // Get the x-value of the tap location
         let xValue = lineChartView.valueForTouchPoint(point: location, axis: .left).x
+
         if let dataSet = lineChartView.data?.dataSets.first,
            let entry = dataSet.entryForXValue(xValue, closestToY: Double.nan) {
             
-            // Add the selected point to the array
+            // Add the selected point
             selectedPoints.append(entry)
-            print("Double-tapped point: X: \(entry.x), Y: \(entry.y)")
+            print("Tapped point: X: \(entry.x), Y: \(entry.y)")
 
-            // If two points have been selected, calculate the difference
-            if selectedPoints.count == 2 {
-                calculateAndSonifyDifference()
+            // Keep only the last two points
+            if selectedPoints.count > 2 {
+                selectedPoints.removeFirst()
             }
         }
+    }
+
+
+    
+    //Rifat Handledouble tap gesture
+    @objc func handleDoubleTap(_ sender: UITapGestureRecognizer) {
+        // Check if there are exactly two points selected
+        guard selectedPoints.count == 2 else {
+            print("Double-tap requires two selected points.")
+            return
+        }
+
+        // Sort the points by their y-values (highest to lowest)
+        let sortedPoints = selectedPoints.sorted { $0.y > $1.y }
+        let higherPoint = sortedPoints[0]
+        let lowerPoint = sortedPoints[1]
+
+        print("Higher point: X: \(higherPoint.x), Y: \(higherPoint.y)")
+        print("Lower point: X: \(lowerPoint.x), Y: \(lowerPoint.y)")
+
+        // Play the sloping sound from higher to lower
+        audioManager.playSlope(from: higherPoint.y, to: lowerPoint.y)
+
+        // Clear selected points after playing the slope
+        selectedPoints.removeAll()
     }
 
     
@@ -64,32 +87,70 @@ class ViewController: UIViewController {
     func calculateAndSonifyDifference() {
         // Ensure there are two points to calculate the difference
         guard selectedPoints.count == 2 else { return }
-
         let point1 = selectedPoints[0]
         let point2 = selectedPoints[1]
-
-        // Calculate the absolute difference in the y-values
-        let difference = abs(point2.y - point1.y)
-        print("Difference between points: \(difference)")
-
+        
+        //lets sort the points according to y-values
+        let sortedPoints = selectedPoints.sorted { $0.y < $1.y }
+        let higherPoint = sortedPoints[0]
+        let lowerPoint = sortedPoints[1]
+        
+        print("Higher point: X: \(higherPoint.x), Y: \(higherPoint.y)")
+        print("Lower point: X: \(lowerPoint.x), Y: \(lowerPoint.y)")
+        
         // Clear the selected points for the next interaction
         selectedPoints.removeAll()
-
-        // Pass the difference to the audio manager for sonification
-        sonifyDifference(difference)
+        
+        // Pass the points to the sloping sound method
+        playSlopingSound(from: higherPoint.y, to: lowerPoint.y)
     }
     
-    func sonifyDifference(_ difference: Double) {
-        // Map the difference to a frequency range (e.g., 220 Hz to 880 Hz)
-        let frequency = 220.0 + (difference * 10) // Adjust scaling as needed
-        audioManager.oscillator.frequency = Float(frequency) // Set the oscillator frequency
+    func playSlopingSound(from higherValue: Double, to lowerValue: Double) {
+        // Map y-values to frequencies
+        let minFrequency = 220.0 // Base frequency for the lowest point
+        let maxFrequency = 880.0 // Maximum frequency for the highest point
+
+        let higherFrequency = minFrequency + (higherValue / 40.0) * (maxFrequency - minFrequency)
+        let lowerFrequency = minFrequency + (lowerValue / 40.0) * (maxFrequency - minFrequency)
+
+        print("Playing slope from \(higherFrequency) Hz to \(lowerFrequency) Hz")
+
+        // Start playing the higher frequency
+        audioManager.oscillator.frequency = Float(higherFrequency)
         audioManager.startAudio()
 
-        // Stop the sound after 1 second
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        // Animate the slope to the lower frequency over 1 second
+        let slopeDuration: TimeInterval = 1.0
+        let stepInterval: TimeInterval = 0.05
+        let totalSteps = Int(slopeDuration / stepInterval)
+        let frequencyStep = (lowerFrequency - higherFrequency) / Double(totalSteps)
+
+        var currentFrequency = higherFrequency
+
+        for step in 0...totalSteps {
+            DispatchQueue.main.asyncAfter(deadline: .now() + (stepInterval * Double(step))) {
+                currentFrequency += frequencyStep
+                self.audioManager.oscillator.frequency = Float(currentFrequency)
+            }
+        }
+
+        // Stop the sound after the slope duration
+        DispatchQueue.main.asyncAfter(deadline: .now() + slopeDuration) {
             self.audioManager.stopAudio()
         }
     }
+    
+//    func sonifyDifference(_ difference: Double) {
+//        // Map the difference to a frequency range (e.g., 220 Hz to 880 Hz)
+//        let frequency = 220.0 + (difference * 10) // Adjust scaling as needed
+//        audioManager.oscillator.frequency = Float(frequency) // Set the oscillator frequency
+//        audioManager.startAudio()
+//
+//        // Stop the sound after 1 second
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//            self.audioManager.stopAudio()
+//        }
+//    }
 
     
 
@@ -97,13 +158,19 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         audioManager = AudioManager()
-        //audioManager.setupAudioSession()
-        //audioManager.setupAudioEngine()
         setupLineChart()
-        setupSplitTap()
-        
-        //Rifat: function for double-tap
-        setupDoubleTapGesture()
+
+        // Add single-tap gesture
+        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(_:)))
+        lineChartView.addGestureRecognizer(singleTapGesture)
+
+        // Add double-tap gesture
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
+        doubleTapGesture.numberOfTapsRequired = 2
+        lineChartView.addGestureRecognizer(doubleTapGesture)
+
+        // Ensure single-tap and double-tap gestures can coexist
+        singleTapGesture.require(toFail: doubleTapGesture)
     }
     
     func setupLineChart() {
