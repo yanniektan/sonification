@@ -11,6 +11,7 @@ import Charts
 
 
 
+private var lastInteractionTime: TimeInterval = 0
 
 class ViewController: UIViewController {
     //Rifat: This array will store two points selected
@@ -36,6 +37,11 @@ class ViewController: UIViewController {
         doubleTapGesture.numberOfTapsRequired = 2
         //This puts the gesture to the chart review
         lineChartView.addGestureRecognizer(doubleTapGesture) // Attach the gesture to the chart view
+    }
+    
+    func setupSingleTapGesture() {
+        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(_:)))
+        lineChartView.addGestureRecognizer(singleTapGesture)
     }
     
     
@@ -85,23 +91,13 @@ class ViewController: UIViewController {
     
     //Rifat
     func calculateAndSonifyDifference() {
-        // Ensure there are two points to calculate the difference
         guard selectedPoints.count == 2 else { return }
-        let point1 = selectedPoints[0]
-        let point2 = selectedPoints[1]
-        
-        //lets sort the points according to y-values
-        let sortedPoints = selectedPoints.sorted { $0.y < $1.y }
+        let sortedPoints = selectedPoints.sorted { $0.y > $1.y } // Sort descending
         let higherPoint = sortedPoints[0]
         let lowerPoint = sortedPoints[1]
-        
         print("Higher point: X: \(higherPoint.x), Y: \(higherPoint.y)")
         print("Lower point: X: \(lowerPoint.x), Y: \(lowerPoint.y)")
-        
-        // Clear the selected points for the next interaction
-        selectedPoints.removeAll()
-        
-        // Pass the points to the sloping sound method
+        selectedPoints.removeAll() // Clear for next input
         playSlopingSound(from: higherPoint.y, to: lowerPoint.y)
     }
     
@@ -114,30 +110,35 @@ class ViewController: UIViewController {
         let lowerFrequency = minFrequency + (lowerValue / 40.0) * (maxFrequency - minFrequency)
 
         print("Playing slope from \(higherFrequency) Hz to \(lowerFrequency) Hz")
+        
 
         // Start playing the higher frequency
-        audioManager.oscillator.frequency = Float(higherFrequency)
+        //audioManager.oscillator.frequency = Float(higherFrequency)
         audioManager.startAudio()
 
         // Animate the slope to the lower frequency over 1 second
         let slopeDuration: TimeInterval = 1.0
-        let stepInterval: TimeInterval = 0.05
+        let stepInterval: TimeInterval = 0.1
         let totalSteps = Int(slopeDuration / stepInterval)
         let frequencyStep = (lowerFrequency - higherFrequency) / Double(totalSteps)
 
         var currentFrequency = higherFrequency
-
         for step in 0...totalSteps {
             DispatchQueue.main.asyncAfter(deadline: .now() + (stepInterval * Double(step))) {
+                guard self.audioManager.isOscillatorRunning else {
+                    print("⚠️ Oscillator stopped unexpectedly, stopping slope")
+                    return
+                }
                 currentFrequency += frequencyStep
                 self.audioManager.oscillator.frequency = Float(currentFrequency)
             }
         }
-
         // Stop the sound after the slope duration
         DispatchQueue.main.asyncAfter(deadline: .now() + slopeDuration) {
             self.audioManager.stopAudio()
         }
+        
+        //scheduleStep()
     }
     
 //    func sonifyDifference(_ difference: Double) {
@@ -157,8 +158,16 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("🚀 viewDidLoad started!") // ✅ Debugging print
         audioManager = AudioManager()
         setupLineChart()
+        
+        // Ensure gestures are added AFTER the chart is created
+        setupDoubleTapGesture()
+        setupSingleTapGesture()
+        
+        // Initialize splitTapAlertLabel properly
+        setupSplitTap()
 
         // Add single-tap gesture
         let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap(_:)))
@@ -171,6 +180,26 @@ class ViewController: UIViewController {
 
         // Ensure single-tap and double-tap gestures can coexist
         singleTapGesture.require(toFail: doubleTapGesture)
+        
+        setupSplitTapGesture() // ✅ Make sure this function is called
+        
+        
+        
+        print("🚀 viewDidLoad completed!")
+        
+    }
+    
+    func setupSplitTapGesture() {
+    
+        print("🚀 setupSplitTapGesture() called") // ✅ Debugging print
+        
+        let splitTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSplitTap))
+        splitTapGesture.numberOfTouchesRequired = 2 // ✅ Requires two fingers
+        splitTapGesture.numberOfTapsRequired = 1 // ✅ Requires only a single tap
+        
+        view.addGestureRecognizer(splitTapGesture)
+        
+        print("✅ Split tap gesture recognizer added.") // 🚀 Debugging print
     }
     
     func setupLineChart() {
@@ -194,6 +223,16 @@ class ViewController: UIViewController {
         lineChartView.addGestureRecognizer(panGestureRecognizer)
     }
     
+    func speakText(_ text: String) {
+        let speechSynthesizer = AVSpeechSynthesizer()
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.rate = 0.5 // Adjust speed
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+
+        speechSynthesizer.speak(utterance)
+    }
+
+    
     func setupSplitTap() {
         // Initialize the PaddedLabel
         splitTapAlertLabel = PaddedLabel()
@@ -210,72 +249,122 @@ class ViewController: UIViewController {
     
     @objc func handlePan(_ recognizer: UIPanGestureRecognizer) {
         //let location = recognizer.location(in: lineChartView)
-        guard recognizer.numberOfTouches > 0 else {
+        let location = recognizer.location(in: lineChartView)
+        let xValue = lineChartView.valueForTouchPoint(point: location, axis: .left).x
+        let touchCount = recognizer.numberOfTouches // 👀 Get the number of fingers touching
+        print("🔍 Gesture state: \(recognizer.state.rawValue), Touch count: \(touchCount)")
+        
+        // 🚨 Remove early return so stopAudio() can always run
+        if touchCount == 0 {
+            print("🛑 No fingers detected! Manually stopping audio.")
             isDragging = false
             audioManager.stopAudio()
-            coordinateLabel.isHidden = true
-            splitTapAlertLabel.isHidden = true
+            return  // Ensure we exit immediately after stopping the sound
+        }
+        
+        
+        guard recognizer.numberOfTouches > 0 else {
+            let currentTime = Date().timeIntervalSince1970
+            let timeSinceLastDrag = currentTime - lastInteractionTime
+            
+            if timeSinceLastDrag < 0.3 { // ✅ If user lifts and drags again quickly, don’t stop
+                print("⚠️ Ignoring stop request: User resumed dragging quickly.")
+                return
+            }
+            
+            // ✅ Delay stop request (Adaptive Timing)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                if !self.isDragging {
+                    self.audioManager.stopAudio()
+                }
+            }
             return
         }
         
-        let firstTouchLocation = recognizer.location(ofTouch: 0, in: lineChartView)
         
         switch recognizer.state {
             // Begin dragging
             case .began:
-                isDragging = true
-                audioManager.startAudio()
-            
-            // While dragging
-            case .changed:
-                // Detect split-tap
-                if prevNumberOfTouches == 1 && recognizer.numberOfTouches == 2 {
-                    handleSplitTap()
+                lastInteractionTime = Date().timeIntervalSince1970 // ✅ Track user interaction time
+                if !isDragging {
+                    isDragging = true
+                    print("🎵 Dragging started. Calling startAudio()...")
+                    audioManager.startAudio()
                 }
             
-                // Get the x-value corresponding to the touch location
-                let xValue = lineChartView.valueForTouchPoint(point: firstTouchLocation, axis: .left).x
-            
-            
-                // Get the data point closest to the x-value
+            case .changed:
+                let location = recognizer.location(ofTouch: 0, in: lineChartView)
+                let xValue = lineChartView.valueForTouchPoint(point: location, axis: .left).x
+                
+            if isDragging {
                 if let dataSet = lineChartView.data?.dataSets.first,
                    let entry = dataSet.entryForXValue(xValue, closestToY: Double.nan) {
-                    // Convert the data point's y-value to a pitch and play the tone
                     audioManager.sonifyDataPoint(entry.y)
                     
-                    // Update label text
-                    coordinateLabel.text = String(format: "X: %.2f\nY: %.2f", entry.x, entry.y)
-                    
-                    // Calculate label size to fit text
-                    let labelSize = coordinateLabel.intrinsicContentSize
-                    coordinateLabel.frame = CGRect(x: 30, y: 120, width: labelSize.width, height: labelSize.height)
-                    coordinateLabel.isHidden = false
-                    
-                    // Set the coordinate for split-tap detection
-                    prevNumberOfTouches = recognizer.numberOfTouches
+                    // ✅ Store the latest touched data point for split tap
                     prevCoordinate = entry
+                    print("📌 Stored prevCoordinate: X: \(entry.x), Y: \(entry.y)")
                 }
+            }
             
-            // Stop dragging
-            case .ended, .cancelled:
-                isDragging = false
-                audioManager.stopAudio()
-                coordinateLabel.isHidden = true
-                splitTapAlertLabel.isHidden = true
+            // ✅ NEW: Detect two fingers while dragging
+//            if touchCount == 2 {
+//                print("🎯 Two fingers detected during drag - Triggering split tap!")
+//                handleSplitTap()
+//            }
 
-            
+            case .ended, .cancelled:
+                print("🛑 Dragging stopped! Stopping audio immediately.")
+                isDragging = false
+                audioManager.stopAudio() // ✅ Stop the sound immediately.
+                // 🚨 NEW: Log if `.ended` is actually being detected
+                print("✅ Dragging detected as ended.")
+
+//                lastInteractionTime = Date().timeIntervalSince1970 // ✅ Update when touch ends
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+//                    if !self.isDragging {
+//                        self.audioManager.stopAudio()
+//                    }
+//                }
             default:
-                break
+                print("🔍 Gesture state: \(recognizer.state.rawValue), Touch count: \(touchCount)")
+               
+
+//            default:
+//                break
         }
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+
+        if touches.count == 2 {
+            print("✅ Split tap detected! Reading max value...")
+            audioManager.announceMaxValue()
+        }
+    }
+
+    
     @objc func handleSplitTap() {
-        print("split-tap detected at", prevCoordinate.x, prevCoordinate.y)
+        print("🎯 handleSplitTap() triggered!")
+        guard let entry = prevCoordinate else {
+                print("No data point available for split tap.")
+                return
+            }
+
+        print("Split-tap detected at X: \(entry.x), Y: \(entry.y), now we will announce the highest Y-value.")
+
+        // Stop current sonification before speaking
+        audioManager.stopAudio()
         
-        // TODO: Remove this and perform the intended split-tap action, e.g. speech synthesis
-        splitTapAlertLabel.text = "split-tap detected: \(prevCoordinate.x), \(prevCoordinate.y)"
-        let labelSize = splitTapAlertLabel.intrinsicContentSize
-        splitTapAlertLabel.frame = CGRect(x: 30, y: 180, width: labelSize.width, height: labelSize.height)
+        // ✅ Call AudioManager to announce the highest Y-value
+        audioManager.announceMaxValue()
+
+        // Update UI to show detected split tap
+        splitTapAlertLabel.text = "Value: \(entry.y)"
         splitTapAlertLabel.isHidden = false
+
+        // Call text-to-speech function
+        speakText("X: \(Int(entry.x)), Y: \(Int(entry.y))")
     }
 }

@@ -477,7 +477,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = MK9S3FS4ZQ;
+				DEVELOPMENT_TEAM = V5C392YWUA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AudioARMindfulness2/Info.plist;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to the microphone to capture and play audio in real time.";
@@ -507,7 +507,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = MK9S3FS4ZQ;
+				DEVELOPMENT_TEAM = V5C392YWUA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AudioARMindfulness2/Info.plist;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to the microphone to capture and play audio in real time.";
